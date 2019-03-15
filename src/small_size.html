@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>筑桥</title>
+</head>
+<style>
+    html,body{
+        background:transparent;
+        background-color: rgba(0,0,0,0);
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+    body{
+        background-image: url('renderer/assets/login.png');
+        background-size: 100% 100%;
+        cursor: pointer;
+    }
+</style>
+<body  onclick="showMainWin()" id="body_">
+        111111111111111111
+</body>
+<script>
+        const { ipcRenderer, remote, BrowserWindow,screen} = require('electron');
+        const browserWindow = remote.getCurrentWindow();
+        const parent = browserWindow.getParentWindow();
+        let parent_show = null;
+        function showMainWin(){    
+            if(parent_show){
+                browserWindow.hide();
+                parent.show();
+            }       
+        }          
+        let dragging = false;
+        let mouseX = 0;
+        let mouseY = 0;
+        document.getElementById('body_').onmousedown = function (e){
+            dragging = true;
+            const { pageX, pageY } = e;
+            mouseX = pageX;
+            mouseY = pageY;
+            parent_show = true;      
+    
+        }
+        window.onmousemove = function(){
+            parent_show = false;
+            if(dragging == true){ 
+                var position = screen.getCursorScreenPoint()
+                var x_ = position.x-mouseX;
+                var y_ = position.y-mouseY
+                if(x_<=0){
+                    x_ = 0;
+                }else if(x_>screen.getPrimaryDisplay().workArea.width-150){
+                    x_=screen.getPrimaryDisplay().workArea.width-150
+                }
+    
+                if(y_<=0){
+                    y_ = 0;
+                }else if(y_>screen.getPrimaryDisplay().workArea.height-150){
+                    y_=screen.getPrimaryDisplay().workArea.height-150
+                }
+    
+                browserWindow.setBounds({x:x_,y:y_,height:150,width:150})
+            }  
+        }
+        window.onmouseup = function() {
+                dragging = false;
+        }          
+    </script>
+</html>
