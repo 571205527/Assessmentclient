@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 Vue.prototype.$axios = axios;
-axios.defaults.baseURL =`http://localhost:8087`;//本地//`http://118.25.65.152:8086`;//线上//`http://118.25.65.152:8085`;//`http://118.25.65.152:8080`//线上;
+axios.defaults.baseURL =`http://localhost:8087`;//本地
 
 import App from './App'
 import router from './router'
